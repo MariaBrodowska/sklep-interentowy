@@ -2,25 +2,25 @@
 Klient :: Klient()
 {}
 Klient :: Klient(string i, string n, string adres, string p)
-    :imie(i),nazwisko(n),adresDostawy(adres),plec(p)
+        :imie(i),nazwisko(n),adresDostawy(adres),plec(p)
 {}
 void Klient :: dodajKlienta(Klient k){
     klienci.push_back(k);
 }
 Klient* Klient :: zaloguj(){
     for(int i=3;i>0;i--){
-    string l,h;
-    cout << "Podaj login: ";
-    cin >> l;
-    cout << "Podaj hasło: ";
-    cin >> h;
-    for (auto& klient : klienci){
-        if (l == klient.login && h == klient.haslo && l != "" && h != ""){
-            cout << "Witaj ponownie " << klient.imie << " " << klient.nazwisko << "!" << endl;
-            return &klient;
+        string l,h;
+        cout << "Podaj login: ";
+        cin >> l;
+        cout << "Podaj hasło: ";
+        cin >> h;
+        for (auto& klient : klienci){
+            if (l == klient.login && h == klient.haslo && l != "" && h != ""){
+                cout << "Witaj ponownie " << klient.imie << " " << klient.nazwisko << "!" << endl;
+                return &klient;
+            }
         }
-    }
-    cout << "Podano zły login lub hasło\nPozostało " << i-1 << " próby logowania" << endl;
+        if(i!=1) cout << "Podano zły login lub hasło\nPozostało " << i-1 << " próby logowania" << endl;
     }
     return nullptr;
 }

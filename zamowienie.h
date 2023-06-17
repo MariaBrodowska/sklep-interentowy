@@ -4,15 +4,18 @@
 using namespace std;
 #include "produkty.h"
 #include <bits/stdc++.h>
+#include <ctime>
 enum Platnosc{gotowka, karta, blik};
 
 class Zamowienie{
-    int ilosc;
-    float stawkaVAT, cena, calaCena;
+public:
+    vector <Produkt> produkty;
+    void dodajProdukt(Produkt p);
+    int iloscWszystkich;
+    float calaCena;
     string dataZamowienia;
+    //void pobierzDate();
     Platnosc platnosc;
-    vector <Produkt> produkt;
-
 };
 
 

@@ -11,6 +11,7 @@ using namespace std;
 class Klient {
 public:
     vector <Klient> klienci;
+    vector <Zamowienie> zamowienia;
     string imie, nazwisko, adresDostawy, plec, login, haslo;
     Klient();
     Klient(string i, string n, string adres, string p);
