@@ -3,7 +3,6 @@
 #include <iostream>
 #include <bits/stdc++.h>
 #include "zamowienie.h"
-#include <stdio.h>
 #include <vector>
 #include <fstream>
 using namespace std;
@@ -20,7 +19,11 @@ public:
     void zarejestruj(Klient* klient);
     void modyfikacja(Klient* klient);
     void zapisWszystkich();
-    //vector <Zamowienie> zamowienie;
+    void dodajZamowienie(Zamowienie z);
+    void wyswietlZamowienia();
+    void edytujZamowienie(Zamowienie& z,vector <Produkt> w);
+    void zapisTekstowyZamowien();
+    void zapisBinarnyZamowien();
 };
 
 

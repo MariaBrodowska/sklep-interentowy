@@ -113,3 +113,109 @@ void Klient :: modyfikacja(Klient* klient){
         }
     }
 }
+void Klient :: dodajZamowienie(Zamowienie z){
+    zamowienia.push_back(z);
+}
+void Klient :: wyswietlZamowienia(){
+    cout << "-----------Historia zamowien-------------" << endl;
+    for (auto& z : zamowienia){
+        cout << "\t\t" << z.dataZamowienia << endl;
+        cout << "lista produktów: " << endl;
+        for (auto& p : z.produkty){
+            cout << p.nazwa << ", " << p.ileZamowiono << " sztuk, cena za sztuke(VAT): " << p.cenaVAT << ", cena za sztuke(bez VATu): " << p.cena << endl;
+        }
+        cout << "ilosc wszystkich produktow: " << z.iloscWszystkich << endl;
+        string pl;
+        switch(z.platnosc){
+            case gotowka:
+                pl = "gotowka";
+                break;
+            case karta:
+                pl = "karta";
+                break;
+            case blik:
+                pl = "blikiem";
+                break;
+        }
+        cout << "platnosc: " << pl << endl;
+        cout << "razem bez VATu: " << z.calaCena << endl;
+        cout << "razem z VATem: " << z.calaCenaVAT << endl;
+        cout << "---------------------------------------" << endl;
+    }
+}
+void Klient :: zapisTekstowyZamowien() {
+    ofstream plik;
+    plik.open("C:\\Users\\VivoBook\\Desktop\\projekt zaliczenowy  lab Maria Brodowska\\zapisTekstowyZamowien.csv",ios_base::app);
+    for (auto& z : zamowienia){
+    plik << "Data zamowienia:" << ";" << z.dataZamowienia << "\n";
+    plik << "Ilosc wszystkich produktow:" << ";" << z.iloscWszystkich << "\n";
+    plik << "Cena z VATem:" << ";" << z.calaCenaVAT << "\n";
+    plik << "Cena bez VATu:" << ";" << z.calaCena << "\n";
+    plik << "Cena bez VATu:" << ";" << z.platnosc << "\n";
+    for (auto &p: z.produkty) {
+        plik << p.nazwa << ";" << p.cenaVAT << ";" << p.ilePozostalo << "\n";
+    }
+    plik.close();
+}
+}
+void Klient :: zapisBinarnyZamowien(){
+    ofstream plik;
+    plik.open("C:\\Users\\VivoBook\\Desktop\\projekt zaliczenowy  lab Maria Brodowska\\zapisBinarnyZamowien.bin", ios_base::out|ios_base::binary);
+    for (auto& z : zamowienia){
+    plik.write(reinterpret_cast<char*>(&z.dataZamowienia),sizeof(z.dataZamowienia));
+    plik.write(reinterpret_cast<char*>(&z.iloscWszystkich),sizeof(z.iloscWszystkich));
+    plik.write(reinterpret_cast<char*>(&z.calaCenaVAT),sizeof(z.calaCenaVAT));
+    plik.write(reinterpret_cast<char*>(&z.calaCena),sizeof(z.calaCena));
+    plik.write(reinterpret_cast<char*>(&z.platnosc),sizeof(z.platnosc));
+    for (auto& p : z.produkty){
+        plik.write(reinterpret_cast<char*>(&p.nazwa),sizeof(p.nazwa));
+        plik.write(reinterpret_cast<char*>(&p.cenaVAT),sizeof(p.cenaVAT));
+        plik.write(reinterpret_cast<char*>(&p.ilePozostalo),sizeof(p.ilePozostalo));
+    }
+    plik.close();
+}
+}
+void Klient :: edytujZamowienie(Zamowienie& z, vector <Produkt> wszystkieProdukty){
+    cout << "Ostatnie zamowienie: " << z.dataZamowienia << endl;
+    cout << "Wybierz co chcesz zmienic:" << endl;
+    cout << "1. sposob platnosci\n2. ilosc produktow\n3. usuniecie produktu\n4. dodanie nowego produktu" << endl;
+    int w, i = 1, ile;
+    cin >> w;
+    auto iplat = zamowienia.end()-1;
+    if ( iplat->dataZamowienia == z.dataZamowienia){
+        zamowienia.erase(iplat);
+    }
+    switch(w){
+        case 1:
+            z.pobierzPlatnosc();
+            break;
+        case 2:
+            cout << "Wybierz produkt: " << endl;
+            for (auto& p : z.produkty){
+                cout << i << ". " << p.nazwa << ", " << p.ileZamowiono << " sztuk" << endl;
+                i++;
+            }
+            cin >> i;
+            cout << "Podaj ilosc: ";
+            cin >> ile;
+            z.produkty[i-1].ileZamowiono = ile;
+            break;
+        case 3:
+            i = 1;
+            cout << "Wybierz produkt: " << endl;
+            for (auto& p : z.produkty){
+                cout << i << ". " << p.nazwa << ", " << p.ileZamowiono << " sztuk" << endl;
+                i++;
+            }
+            cin >> i;
+            z.usunProdukt(z.produkty[i-1]);
+            break;
+        case 4:
+            z.dodajListeProduktow(wszystkieProdukty);
+            break;
+    }
+    if(w!=1){
+        z.aktualizuj();
+    }
+    zamowienia.push_back(z);
+}

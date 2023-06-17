@@ -1,9 +1,8 @@
 #include <iostream>
 #include "klient.h"
 #include "zamowienie.h"
-#include <bits/stdc++.h>
+#include "produkty.h"
 #include <vector>
-#include <stdio.h>
 
 using namespace std;
 void zapisDoTekstowego(Klient klient){
@@ -92,6 +91,7 @@ void pobierzProdukty(vector <Produkt>* produkty){
         produkt.cena = stof(pcena);
         produkt.ilePozostalo = stoi(pile);
         produkt.cenaVAT = produkt.cena * 1.23;
+        produkt.ileZamowiono = 0;
         produkty->push_back(produkt);
     }
 }
@@ -126,50 +126,48 @@ int main() {
             break;
     }
     //menu wyboru
-    while (w!=4){
-    cout << "MENU" << endl;
-    cout << "1. Stworz nowe zamowienie\n2. Edytuj ostatnie zamowienie\n3. Zmień moje dane\n4. Zakoncz" << endl;
-    cin >> w;
-    //map <Klient*, Zamowienie> zamowienia;
     Zamowienie noweZamowienie;
+    Produkt *wskp = nullptr;
+    Produkt pr;
+    wskp = &pr;
     vector <Produkt> wszystkieProdukty;
     pobierzProdukty(&wszystkieProdukty);
-    int i, numer, ile;
-    string czy = "tak";
+    while (w!=4){
+    cout << "MENU" << endl;
+    cout << "1. Stworz nowe zamowienie\n2. Edytuj ostatnie zamowienie\n3. Wyswietl historie zamowien\n4. Zmień moje dane\n5. Zakoncz" << endl;
+    cin >> w;
     switch(w){
         case 1:
-            //zamowienia.insert(pair<Klient*, Zamowienie>(wsk, noweZamowienie));
-            while(czy=="tak"){
-                cout << "Wybierz produkt jaki chcesz dodać: " << endl;
-                i = 1;
-                for (auto &produkt: wszystkieProdukty) {
-                    cout << i << ". " << produkt.nazwa << ", cena: " << produkt.cenaVAT << " zl, pozostalo: "
-                         << produkt.ilePozostalo << " sztuk" << endl;
-                    i++;
-                }
-                cin >> numer;
-                cout << "liczba sztuk: ";
-                cin >> ile;
-                wszystkieProdukty[numer - 1].ileZamowiono = ile;
-                noweZamowienie.dodajProdukt(wszystkieProdukty[numer - 1]);
-                cout << "Dodano produkt " << wszystkieProdukty[numer - 1].nazwa << ", ilosc: "
-                     << wszystkieProdukty[numer - 1].ileZamowiono << endl;
-                cout << "Czy chcesz dodac kolejny produkt?(tak/nie) ";
-                cin >> czy;
-            }
-            //noweZamowienie.pobierzDate();
-
+            noweZamowienie.dodajListeProduktow(wszystkieProdukty);
+            noweZamowienie.pobierzDate();
+            noweZamowienie.pobierzPlatnosc();
+            wsk->dodajZamowienie(noweZamowienie);
+            cout << "Dodano nowe zamowienie!" << endl;
+            wsk->wyswietlZamowienia();
             break;
         case 2:
-
+            if (!wsk->zamowienia.empty()){
+                wsk->edytujZamowienie(noweZamowienie,wszystkieProdukty);
+                wsk->wyswietlZamowienia();
+            }
+            else cout << "Brak ostatnich zamowien" << endl;
             break;
         case 3:
-            wsk->modyfikacja(wsk);
-            if (!wsk->login.empty()) wsk1->zapisWszystkich();
-            else zapisDoTekstowego(*wsk);
+            if (!wsk->zamowienia.empty()) {
+                wsk->wyswietlZamowienia();
+            }
+            else cout << "Brak ostatnich zamowien" << endl;
             break;
         case 4:
+            wsk->modyfikacja(wsk);
+            if (!wsk1->login.empty()) wsk1->zapisWszystkich();
+            else zapisDoTekstowego(*wsk);
+            break;
+        case 5:
+            wskp->aktualizujZapis(wszystkieProdukty);
             zapisDoBinarnego(*wsk);
+            wsk1->zapisTekstowyZamowien();
+            wsk1->zapisBinarnyZamowien();
             return 0;
     }}
 }
