@@ -8,19 +8,22 @@ using namespace std;
 enum Platnosc{gotowka=1, karta=2, blik=3};
 
 class Zamowienie{
-public:
+private:
     vector <Produkt> produkty;
     string dataZamowienia;
     int iloscWszystkich = 0;
     float calaCena = 0;
     float calaCenaVAT = 0;
     Platnosc platnosc;
-    void dodajProdukt(Produkt p);
-    void usunProdukt(Produkt p);
-    void dodajListeProduktow(vector <Produkt> w);
+    void dodajProdukt(Produkt& p);
+    void usunProdukt(Produkt& p);
+public:
+    void dodajListeProduktow(vector <Produkt>& w);
+    void wyczyscZamowienie();
     void aktualizuj();
     void pobierzDate();
     void pobierzPlatnosc();
+    friend class Klient;
 };
 
 

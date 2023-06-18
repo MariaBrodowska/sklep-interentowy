@@ -1,6 +1,6 @@
 #include "zamowienie.h"
 
-void Zamowienie :: dodajProdukt(Produkt p){
+void Zamowienie :: dodajProdukt(Produkt& p){
     produkty.push_back(p);
     iloscWszystkich += p.ileZamowiono;
     calaCena += p.ileZamowiono * p.cena;
@@ -10,13 +10,13 @@ void Zamowienie :: aktualizuj(){
     iloscWszystkich=0;
     calaCena=0;
     calaCenaVAT=0;
-    for (auto p : produkty){
+    for (auto& p : produkty){
         iloscWszystkich += p.ileZamowiono;
         calaCena += p.ileZamowiono * p.cena;
         calaCenaVAT += p.ileZamowiono * p.cenaVAT;
     }
 }
-void Zamowienie :: usunProdukt(Produkt p){
+void Zamowienie :: usunProdukt(Produkt& p){
     auto i = produkty.begin();
     while (i != produkty.end()){
         if ( i->nazwa == p.nazwa){
@@ -25,8 +25,16 @@ void Zamowienie :: usunProdukt(Produkt p){
         else i++;
     }
 }
-
-void Zamowienie :: dodajListeProduktow(vector <Produkt> wszystkieProdukty){
+void Zamowienie :: wyczyscZamowienie(){
+    for (auto& p : produkty){
+        usunProdukt(p);
+    }
+    dataZamowienia = "";
+    iloscWszystkich = 0;
+    calaCena = 0;
+    calaCenaVAT = 0;
+}
+void Zamowienie :: dodajListeProduktow(vector <Produkt>& wszystkieProdukty){
     string czy = "tak";
     int numer, ile, i;
     while(czy=="tak"){
@@ -56,7 +64,6 @@ void Zamowienie :: dodajListeProduktow(vector <Produkt> wszystkieProdukty){
 void Zamowienie :: pobierzDate(){
     time_t czas = time(nullptr);
     dataZamowienia = ctime(&czas);
-    //cout << dataZamowienia << endl;
 }
 
 void Zamowienie :: pobierzPlatnosc(){
