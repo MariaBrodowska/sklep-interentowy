@@ -215,45 +215,45 @@ void Klient :: zapisTekstowyZamowien(){
     ofstream plik;
     plik.open("C:\\Users\\VivoBook\\Desktop\\projekt zaliczenowy  lab Maria Brodowska\\zapisTekstowyZamowien.csv",ios_base::app);
     for (auto& z : zamowienia){
-    plik << "Data zamowienia:" << ";" << z.dataZamowienia;
-    plik << "Dane klienta:" << ";" << imie << ";" << nazwisko << ";" << adresDostawy << "\n";
-    plik << "Ilosc wszystkich produktow:" << ";" << z.iloscWszystkich << "\n";
-    plik << "Cena z VATem:" << ";" << z.calaCenaVAT << "\n";
-    plik << "Cena bez VATu:" << ";" << z.calaCena << "\n";
-    string pl;
-    switch(z.platnosc){
-        case 1:
-            pl = "gotowka";
-            break;
-        case 2:
-            pl = "karta";
-            break;
-        case 3:
-            pl = "blik";
-            break;
-    }
-    plik << "Platnosc:" << ";" << pl << "\n";
-    for (auto &p: z.produkty) {
-        plik << p.nazwa << ";" << p.cena << ";" << p.ileZamowiono  << " sztuk" << "\n";
-    }}
+        plik << "Data zamowienia:" << ";" << z.dataZamowienia;
+        plik << "Dane klienta:" << ";" << imie << ";" << nazwisko << ";" << adresDostawy << "\n";
+        plik << "Ilosc wszystkich produktow:" << ";" << z.iloscWszystkich << "\n";
+        plik << "Cena z VATem:" << ";" << z.calaCenaVAT << "\n";
+        plik << "Cena bez VATu:" << ";" << z.calaCena << "\n";
+        string pl;
+        switch(z.platnosc){
+            case 1:
+                pl = "gotowka";
+                break;
+            case 2:
+                pl = "karta";
+                break;
+            case 3:
+                pl = "blik";
+                break;
+        }
+        plik << "Platnosc:" << ";" << pl << "\n";
+        for (auto &p: z.produkty) {
+            plik << p.nazwa << ";" << p.cena << ";" << p.ileZamowiono  << " sztuk" << "\n";
+        }}
     plik.close();
 }
 void Klient :: zapisBinarnyZamowien(){
     ofstream plik;
     plik.open("C:\\Users\\VivoBook\\Desktop\\projekt zaliczenowy  lab Maria Brodowska\\zapisBinarnyZamowien.bin", ios_base::out|ios_base::binary);
     for (auto& z : zamowienia){
-    plik.write(reinterpret_cast<char*>(&z.dataZamowienia),sizeof(z.dataZamowienia));
-    plik.write(reinterpret_cast<char*>(&z.iloscWszystkich),sizeof(z.iloscWszystkich));
-    plik.write(reinterpret_cast<char*>(&z.calaCenaVAT),sizeof(z.calaCenaVAT));
-    plik.write(reinterpret_cast<char*>(&z.calaCena),sizeof(z.calaCena));
-    plik.write(reinterpret_cast<char*>(&z.platnosc),sizeof(z.platnosc));
-    for (auto& p : z.produkty){
-        plik.write(reinterpret_cast<char*>(&p.nazwa),sizeof(p.nazwa));
-        plik.write(reinterpret_cast<char*>(&p.cenaVAT),sizeof(p.cenaVAT));
-        plik.write(reinterpret_cast<char*>(&p.ilePozostalo),sizeof(p.ilePozostalo));
+        plik.write(reinterpret_cast<char*>(&z.dataZamowienia),sizeof(z.dataZamowienia));
+        plik.write(reinterpret_cast<char*>(&z.iloscWszystkich),sizeof(z.iloscWszystkich));
+        plik.write(reinterpret_cast<char*>(&z.calaCenaVAT),sizeof(z.calaCenaVAT));
+        plik.write(reinterpret_cast<char*>(&z.calaCena),sizeof(z.calaCena));
+        plik.write(reinterpret_cast<char*>(&z.platnosc),sizeof(z.platnosc));
+        for (auto& p : z.produkty){
+            plik.write(reinterpret_cast<char*>(&p.nazwa),sizeof(p.nazwa));
+            plik.write(reinterpret_cast<char*>(&p.cenaVAT),sizeof(p.cenaVAT));
+            plik.write(reinterpret_cast<char*>(&p.ilePozostalo),sizeof(p.ilePozostalo));
+        }
+        plik.close();
     }
-    plik.close();
-}
 }
 void Klient :: edytujZamowienie(Zamowienie& z, vector <Produkt>& wszystkieProdukty){
     cout << "Ostatnie zamowienie: " << z.dataZamowienia << endl;

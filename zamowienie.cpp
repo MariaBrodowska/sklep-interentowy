@@ -70,22 +70,22 @@ void Zamowienie :: pobierzPlatnosc(){
     int p;
     bool w = false;
     while (!w){
-    cout << "Wybierz platnosc (1-gotowka, 2-karta, 3-blik): ";
-    cin >> p;
-    switch(p){
-        case 1:
-            platnosc = gotowka;
-            w = true;
-            break;
-        case 2:
-            platnosc = karta;
-            w = true;
-            break;
-        case 3:
-            platnosc = blik;
-            w = true;
-            break;
-        default:
-            cout << "nieprawidlowy wybor" << endl;
-    }}
+        cout << "Wybierz platnosc (1-gotowka, 2-karta, 3-blik): ";
+        cin >> p;
+        switch(p){
+            case 1:
+                platnosc = gotowka;
+                w = true;
+                break;
+            case 2:
+                platnosc = karta;
+                w = true;
+                break;
+            case 3:
+                platnosc = blik;
+                w = true;
+                break;
+            default:
+                cout << "nieprawidlowy wybor" << endl;
+        }}
 }
