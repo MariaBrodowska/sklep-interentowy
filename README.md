@@ -4,4 +4,4 @@
 - załadowanie ilości produktów, ich aktualizacja
 - możliwość dodania zamówienia, edycji (zmiany formy płatności, ilości produktów, dodanie nowych)
 - wyświetlanie historii zamówień
-[### WERSJA Z INTERFEJSEM GRAFICZNYM](https://github.com/MariaBrodowska/graficzny_sklep_internetowy)
+###[WERSJA Z INTERFEJSEM GRAFICZNYM](https://github.com/MariaBrodowska/graficzny_sklep_internetowy)
