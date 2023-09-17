@@ -3,5 +3,5 @@
 - wybór opcji logowanie, rejestracja, zakup bez rejestracji
 - załadowanie ilości produktów, ich aktualizacja
 - możliwość dodania zamówienia, edycji (zmiany formy płatności, ilości produktów, dodanie nowych)
-- wyświetlanie historii zamówień
-###[WERSJA Z INTERFEJSEM GRAFICZNYM](https://github.com/MariaBrodowska/graficzny_sklep_internetowy)
+- wyświetlanie historii zamówień<br>
+[WERSJA Z INTERFEJSEM GRAFICZNYM](https://github.com/MariaBrodowska/graficzny_sklep_internetowy)
